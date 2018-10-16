@@ -1,0 +1,3 @@
+rootProject.name = 'exo1'
+
+include ':app'

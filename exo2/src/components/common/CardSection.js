@@ -3,7 +3,7 @@ import { View, StyleSheet } from 'react-native';
 
 type Props = {};
 
-export default class CardSection extends Component<Props> {
+class CardSection extends Component<Props> {
     render() {
         return(
             <View style={styles.containerStyle}>
@@ -21,3 +21,5 @@ const styles = StyleSheet.create({
         margin: 5,
     }
 });
+
+export { CardSection }

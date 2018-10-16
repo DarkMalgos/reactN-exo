@@ -10,10 +10,9 @@ import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View} from 'react-native';
 
 
-type Props = {
-  headerText: string
-};
-export default class App extends Component<Props> {
+type Props = {};
+
+class Header extends Component<Props> {
   render() {
     return (
         <View style={styles.viewStyle}>
@@ -38,3 +37,5 @@ const styles = StyleSheet.create({
     fontSize: 20
   }
 })
+
+export { Header }

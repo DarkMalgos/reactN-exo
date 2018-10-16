@@ -3,11 +3,11 @@ import { TouchableOpacity, Text, StyleSheet } from 'react-native';
 
 type Props = {};
 
-export default class Button extends Component<Props> {
+class Button extends Component<Props> {
     render() {
         return(
             <TouchableOpacity style={styles.button} onPress={this.props.onPress}>
-                <Text style={styles.buttonText}>Buy!</Text>
+                <Text style={styles.buttonText}>{this.props.buttonText}</Text>
             </TouchableOpacity>
         );
     }
@@ -28,8 +28,9 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         color: '#007aff',
         fontSize: 16,
-        fontWeight: 'bold',
         paddingTop: 10,
         paddingBottom: 10,
     },
 });
+
+export { Button }

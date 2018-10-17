@@ -2,9 +2,11 @@
 
 import {AppRegistry, View} from 'react-native';
 import React, {Component} from 'react';
+import {name as appName} from './app.json';
+
+//components
 import Header from './src/components/header';
 import AlbumList from './src/components/albumList';
-import {name as appName} from './app.json';
 
 type Props = {};
 export default class App extends Component<Props> {

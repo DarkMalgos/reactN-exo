@@ -8,12 +8,13 @@
 
 import React, {Component} from 'react';
 import {StyleSheet, Text} from 'react-native';
-import firebase from '@firebase';
+import firebase from '@firebase/app';
+import '@firebase/auth';
+import '@firebase/database';
 
 
 //components
-import {Card, CardSection, Button, Input} from './common';
-import { FirebaseAuth } from '@firebase/auth-types';
+import {Card, CardSection, Button, Input, Spinner} from './common';
 
 type Props = {};
 export default class App extends Component<Props> {
@@ -21,24 +22,69 @@ export default class App extends Component<Props> {
     state = { 
         email: '',
         password: '',
-        error: ''
+        error: '',
+        loading: false
     }
 
-    login = () => {
-        const {email, password} = this.state;
-        firebase.auth().signInWithEmailAndPassword(email, password)
-            .then((response) => {
-            })
-            .catch(() => {
-                firebase.auth().CreateUserWithEmailAndPassword(email, password)
-                  .then((response) => {
+    validateEmail = (email) => {
+        var re = /^[a-z0-9.-_]+@[a-z0-9]+.+[a-z0-9]$/;
+          return re.test(email);
+      };
 
-                  })
-                  .catch((e) => {
-                      this.setState({error: 'Authentication failed.'})
-                  })  
+    login = () => {
+        this.setState({
+            error: '',
+            loading: true
+        });
+        const {email, password} = this.state;
+        
+        if (!this.validateEmail(this.state.email)) {
+            this.setState({
+                error: 'You are an error in your email.',
+                loading: false
+        });
+            return;
+        }
+        if (this.state.password == '' || this.state.password.length < 6) {
+            this.setState({
+                error: 'You are an error in your password.',
+                loading: false
+            });
+            return;
+        }
+
+        firebase.auth().signInWithEmailAndPassword(email, password)
+            .then(this.onLogginSuccess.bind(this))
+            .catch(() => {
+                firebase.auth().createUserWithEmailAndPassword(email, password)
+                    .then(this.onLogginSuccess.bind(this))
+                    .catch((e) => {
+                        this.setState({
+                            error: 'Authentication failed.',
+                            loading: false
+                        })
+                    })  
             })
         console.log(this.state.email);
+    }
+
+    onLogginSuccess() {
+        this.setState({
+            email: '',
+            password: '',
+            error: '',
+            loading: false
+        })
+    }
+
+    renderButton() {
+        if (this.state.loading) {
+            return <Spinner size={'small'}/>
+        }
+
+        return (
+            <Button onPress={this.login} buttonText={'Log in'}/>
+        )
     }
 
     render() {
@@ -50,6 +96,7 @@ export default class App extends Component<Props> {
                     onChangeText={email => this.setState({ email })}
                     label={'Email'}
                     placeholder={'example@mail.com'}
+                    keyboardType={'email-address'}
                     secureTextEntry={false}/>
                 </CardSection>
                 <CardSection>
@@ -60,11 +107,11 @@ export default class App extends Component<Props> {
                     placeholder={'enter your password'}
                     secureTextEntry={true}/>
                 </CardSection>
-                <Text>
+                <Text style={styles.errorTextStyle}>
                     {this.state.error}
                 </Text>
                 <CardSection>
-                    <Button onPress={this.login} buttonText={'Log in'}/>
+                    {this.renderButton()}
                 </CardSection>
             </Card>
         );

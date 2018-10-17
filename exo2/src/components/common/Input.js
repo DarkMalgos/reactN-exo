@@ -12,6 +12,7 @@ class Input extends Component<Props> {
                 <Text style={styles.textStyle}>{this.props.label}</Text>
                 <TextInput
                     secureTextEntry={this.props.secureTextEntry}
+                    keyboardType={this.props.keyboardType}
                     autoCorrect={false}
                     placeholder={this.props.placeholder}
                     value={this.props.value}

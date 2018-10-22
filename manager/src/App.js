@@ -8,6 +8,9 @@ import firebase from '@firebase/app';
 //components
 import LoginForm from './components/LoginForm';
 
+//Router
+import Router from './Router';
+
 type Props = {};
 class App extends Component<Props> {
 
@@ -27,7 +30,7 @@ class App extends Component<Props> {
         const store = createStore(reducers, {}, applyMiddleware(ReduxThunk))
         return (
             <Provider store={store}>
-                <LoginForm/>
+                <Router/>
             </Provider>
         );
     }

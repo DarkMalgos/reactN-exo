@@ -6,7 +6,7 @@ type Props = {};
 class CardSection extends Component<Props> {
     render() {
         return(
-            <View style={styles.containerStyle}>
+            <View style={[styles.containerStyle, this.props.style]}>
                 {this.props.children}
             </View>
         );

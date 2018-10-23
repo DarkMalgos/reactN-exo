@@ -1,7 +1,7 @@
-import { EMPLOYEE_UPDATE } from './types';
+import { EMPLOYEE_UPDATE, EMPLOYEE_CREATE } from '../actions/types';
 
 const INITIAL_STATE = {
-    name: '',
+    employee: '',
     phone: '',
     shift: ''
 };
@@ -9,8 +9,11 @@ const INITIAL_STATE = {
 export default (state = INITIAL_STATE, action) => {
     switch (action.type) {
         case EMPLOYEE_UPDATE:
-            return { ...state, [action.payload.prop]: action.payload.value }
+            return { ...state, [action.payload.prop]: action.payload.value };
+        case EMPLOYEE_CREATE:
+            return INITIAL_STATE;
         default:
-            break;
+            console.log('employee form state', state)
+            return state;
     }
 };
